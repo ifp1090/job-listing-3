@@ -2,8 +2,6 @@ class Admin::JobsController < ApplicationController
 before_action :authenticate_user!, only: [:new, :create, :update, :edit, :destroy]
 before_action :require_is_admin
 
-
-
   def index
     @jobs = Job.all
   end
@@ -30,7 +28,7 @@ def edit
 end
 
 def update
-  @job = job.find(params[:id])
+  @job = Job.find(params[:id])
   if @job.update(job_params)
     redirect_to admin_jobs_path
   else
@@ -39,20 +37,15 @@ def update
 end
 
 def destroy
-  @job = job.find(params[:id])
+  @job = Job.find(params[:id])
   @job.destroy
   redirect_to admin_jobs_path
 end
 
 private
 def job_params
-  params.require(:job).permit(:title, :description)
+  params.require(:job).permit(:title, :description, :wage_upper_bound, :wage_lower_bound, :contact_email)
 end
 
-def require_is_admin
-  if !current_user.admin?
-    flash[:alert] = 'You are not admin'
-    redirect_to root_path
-  end
-end
+
 end
