@@ -1,7 +1,36 @@
+<head>
+<style type="text/css">
+p.thick {font-weight: bold}
+</style>
+</head>
+
+
 <div class="pull-right">
   <%= link_to("新增职需", new_admin_job_path, :class => "btn btn-default") %>
 </div>
 <table class="table table-boldered">
+  <thead>
+    <tr>
+      <td>
+<p class="thick">职缺名称</p>
+      </td>
+      <td>
+        <p class="thick">收到简历数量</p>
+      </td>
+      <td>
+<p class="thick">薪资下限</p>
+      </td>
+      <td>
+<p class="thick">薪资上限</p>
+      </td>
+      <td>
+<p class="thick">管理选项</p>
+      </td>
+      <td>
+<p class="thick">发布时间</p>
+      </td>
+    </tr>
+  </thead>
   <% @jobs.each do |job| %>
   <tr>
     <td>
@@ -9,6 +38,17 @@
       <%= link_to(job.title, admin_job_path(job)) %>
     </td>
     <td>
+      <%= link_to(job.resumes.count, admin_job_resumes_path(job)) %>
+    </td>
+    <td>
+      <%= job.wage_lower_bound %>
+    </td>
+    <td>
+        <%= job.wage_upper_bound %>
+    </td>
+
+    <td>
+
     <%= link_to("编辑", edit_admin_job_path(job)) %> |
     <%= link_to("删除", admin_job_path(job), :method => :delete, :deta => { :confirm => "Are you sure？"}) %>
     <% if job.is_hidden %>
